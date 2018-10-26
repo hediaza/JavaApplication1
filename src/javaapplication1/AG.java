@@ -5,6 +5,9 @@
  */
 package javaapplication1;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  *
  * @author EST_2F_MCA_000
@@ -33,19 +36,32 @@ public abstract class AG<T> {
     public abstract Solucion generar( int[] adn );
     
     
-    public void imprimir( int iteracion ){
-        System.out.println( "*********" + iteracion + "**********");
+    public void imprimir( int iteracion, FileWriter fileWriter){
+        //System.out.println( "*********" + iteracion + "**********");
         int N = poblacion.length;
         int k=0;
         for( int i=1; i<N; i++ ){
             if( queBuenoSoy[i] > queBuenoSoy[k]) k=i;
         }
         gDios = generar(poblacion[k]);
-        System.out.println(gDios);
-        System.out.println(f.evaluar((T)gDios));
+        //System.out.println(gDios);
+        //System.out.println(f.evaluar((T)gDios));
+        if (iteracion % 1000 == 0) {
+            System.out.println( "*********" + iteracion + "**********"); 
+        try {
+            String valor = String.valueOf(f.evaluar((T)gDios));
+            fileWriter.append(valor);
+            fileWriter.append(",");
+            //System.out.println(valor);
+        } catch (IOException e) {
+            System.out.println("Error while flushing/closing fileWriter !!!");
+            e.printStackTrace();
+        } 
+        }
+        
     }
     
-    public T aplicar( int ITER ){
+    public T aplicar( int ITER, FileWriter fileWriter){
         int N = poblacion.length;
         for( int i=0; i<ITER; i++ ){
             int[][] padres = new int[N][];
@@ -66,7 +82,10 @@ public abstract class AG<T> {
                 gDios = generar(poblacion[k+1]);
                 queBuenoSoy[k+1] = f.evaluar((T)gDios);
             }
-            imprimir( i );
+            //if (i % 1000 == 0) {
+                imprimir( i, fileWriter);
+            //}
+            
         }
         int k=0;
         for( int i=1; i<N; i++ ){
@@ -76,5 +95,5 @@ public abstract class AG<T> {
         System.out.println(gDios);
         System.out.println(f.evaluar((T)gDios));
         return (T)gDios;
-    }    
+    }     
 }

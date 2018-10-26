@@ -47,16 +47,17 @@ public abstract class AG<T> {
         //System.out.println(gDios);
         //System.out.println(f.evaluar((T)gDios));
         if (iteracion % 1000 == 0) {
-            System.out.println( "*********" + iteracion + "**********"); 
-        try {
-            String valor = String.valueOf(f.evaluar((T)gDios));
-            fileWriter.append(valor);
-            fileWriter.append(",");
-            //System.out.println(valor);
-        } catch (IOException e) {
-            System.out.println("Error while flushing/closing fileWriter !!!");
-            e.printStackTrace();
-        } 
+            //System.out.println( "*********" + iteracion + "**********"); 
+            
+            try {
+                String valor = String.valueOf(f.evaluar((T)gDios));
+                fileWriter.append(valor);
+                fileWriter.append(",");
+                //System.out.println(valor);
+            } catch (IOException e) {
+                System.out.println("Error while flushing/closing fileWriter !!!");
+                e.printStackTrace();
+            } 
         }
         
     }
@@ -82,9 +83,8 @@ public abstract class AG<T> {
                 gDios = generar(poblacion[k+1]);
                 queBuenoSoy[k+1] = f.evaluar((T)gDios);
             }
-            //if (i % 1000 == 0) {
-                imprimir( i, fileWriter);
-            //}
+            
+            imprimir( i, fileWriter);
             
         }
         int k=0;

@@ -28,14 +28,16 @@ public class AGReales extends AG<Reales>{
     }    
     
     public static void main( String[] args ){
-        String fileName = "/Users/hernanchodiaz/algoritmos_evo/JavaApplication1/student.csv";
+        String fileName = "/Users/hernanchodiaz/algoritmos_evo/JavaApplication1/datos.csv";
         FileWriter fileWriter = null;
         AGReales.dim = 10;      
         
         try {
             fileWriter = new FileWriter(fileName);
-            for (int i=1; i<=3; i++) {
-            AGReales ag =  new AGReales( new Rastrigin(), 200 );
+            for (int i=1; i<=100; i++) {
+                System.out.println( "Experimento:" + i); 
+                
+                AGReales ag =  new AGReales( new Rastrigin(), 200 );
                 fileWriter.append(String.valueOf(i));
                 fileWriter.append(",");
          
